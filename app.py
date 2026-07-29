@@ -26,36 +26,6 @@ def main():
     st.sidebar.image('logo.png', use_container_width=True)
     st.sidebar.markdown('---')
 
-    # Custom CSS sidebar
-    st.markdown("""
-    <style>
-    [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
-        border-right: 1px solid rgba(255,255,255,0.05);
-    }
-    [data-testid="stSidebar"] .sidebar-title {
-        font-size: 1.2em;
-        font-weight: bold;
-        margin-bottom: 0.5em;
-        color: #ffffff;
-    }
-    [data-testid="stSidebar"] .stSelectbox label {
-        color: #b0b0b0 !important;
-    }
-    [data-testid="stSidebar"] .stSelectbox div[data-baseweb="select"] {
-        background-color: #0f3460 !important;
-        border: 1px solid #e94560 !important;
-        border-radius: 8px !important;
-    }
-    [data-testid="stSidebar"] .stSelectbox div[data-baseweb="select"]:hover {
-        border-color: #533483 !important;
-    }
-    [data-testid="stSidebar"] p {
-        color: #cccccc !important;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
     page = st.sidebar.selectbox(
         'Pilih Halaman',
         ('Home', 'EDA', 'Prediksi')
