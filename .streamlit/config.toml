@@ -1,5 +1,5 @@
 [theme]
-primaryColor = "#F59E0B"             # Warm Amber/Gold (Tombol & Highlight)
-backgroundColor = "#0B132B"          # Deep Navy (Konten Utama)
-secondaryBackgroundColor = "#1C2541" # Slate Navy (Sidebar & Card)
-textColor = "#FFFFFF"                # Pure White (Teks)
+primaryColor = "#10B981"             # Emerald Green (Tombol & Accent)
+backgroundColor = "#062C22"          # Dark Forest (Konten Utama)
+secondaryBackgroundColor = "#0F4C3A" # Deep Emerald (Sidebar & Card)
+textColor = "#ECFDF5"                # Mint White (Teks)
