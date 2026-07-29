@@ -34,9 +34,12 @@ def run():
     # ===================================================================
     st.subheader('1️⃣ Distribusi Siswa per Bidang')
 
-    st.image(os.path.join(ASSET_DIR, 'kategori_jurusan.jpeg'),
-             caption='Kategori Jurusan — Distribusi siswa per bidang (Saintek)',
-             width=700)
+    col_img, _ = st.columns([3, 1])
+    with col_img:
+        st.image(os.path.join(ASSET_DIR, 'kategori_jurusan.jpeg'),
+                 caption='Kategori Jurusan — Distribusi siswa per bidang (Saintek)',
+                 use_container_width=True)
+    st.markdown('')
 
     # Statistik
     cat_dist = df['kategori_jurusan'].value_counts()
@@ -63,9 +66,12 @@ def run():
     # ===================================================================
     st.subheader('2️⃣ Rata-rata Nilai Keseluruhan (86.569 Siswa)')
 
-    st.image(os.path.join(ASSET_DIR, 'avg_nilai_nilai.jpeg'),
-             caption='AVG Nilai-Nilai — Rata-rata 8 mata uji seluruh siswa',
-             width=700)
+    col_img, _ = st.columns([3, 1])
+    with col_img:
+        st.image(os.path.join(ASSET_DIR, 'avg_nilai_nilai.jpeg'),
+                 caption='AVG Nilai-Nilai — Rata-rata 8 mata uji seluruh siswa',
+                 use_container_width=True)
+    st.markdown('')
 
     # Tabel pendukung
     avg_values = df[nilai_cols].mean().sort_values(ascending=False)
@@ -96,9 +102,12 @@ def run():
     # ===================================================================
     st.subheader('3️⃣ Sebaran Nilai per Mata Uji (Box Plot)')
 
-    st.image(os.path.join(ASSET_DIR, 'box_plot.jpeg'),
-             caption='Box Plot Outlier Numeric — Sebaran nilai per mata uji',
-             width=700)
+    col_img, _ = st.columns([3, 1])
+    with col_img:
+        st.image(os.path.join(ASSET_DIR, 'box_plot.jpeg'),
+                 caption='Box Plot Outlier Numeric — Sebaran nilai per mata uji',
+                 use_container_width=True)
+    st.markdown('')
 
     # Stats table
     nama_nilai = ['Nilai Biologi', 'Nilai Fisika', 'Nilai Kimia', 'Nilai Matematika',
@@ -124,9 +133,12 @@ def run():
     # ===================================================================
     st.subheader('4️⃣ Rata-rata Nilai per Bidang (Heatmap)')
 
-    st.image(os.path.join(ASSET_DIR, 'heatmap_kategori.jpeg'),
-             caption='AVG Nilai Pada Kategori Jurusan — Rata-rata nilai per bidang',
-             width=700)
+    col_img, _ = st.columns([3, 1])
+    with col_img:
+        st.image(os.path.join(ASSET_DIR, 'heatmap_kategori.jpeg'),
+                 caption='AVG Nilai Pada Kategori Jurusan — Rata-rata nilai per bidang',
+                 use_container_width=True)
+    st.markdown('')
 
     # Data pendukung
     cols_short = ['Bio', 'Fis', 'Kim', 'Mat', 'KMB', 'KPU', 'KUA', 'PPU']
@@ -152,9 +164,12 @@ def run():
     # ===================================================================
     st.subheader('5️⃣ Jurusan Dengan Minat Terbanyak')
 
-    st.image(os.path.join(ASSET_DIR, 'minat_terbanyak.jpeg'),
-             caption='Jurusan Dengan Minat Terbanyak — Top 40 jurusan paling diminati',
-             width=700)
+    col_img, _ = st.columns([3, 1])
+    with col_img:
+        st.image(os.path.join(ASSET_DIR, 'minat_terbanyak.jpeg'),
+                 caption='Jurusan Dengan Minat Terbanyak — Top 40 jurusan paling diminati',
+                 use_container_width=True)
+    st.markdown('')
 
     # Tabel top 10
     st.markdown('**Top 10 Jurusan Paling Diminati:**')
@@ -171,4 +186,4 @@ def run():
     """)
 
     st.markdown('---')
-    st.markdown('**© 2026 Muhammad Izzat — Final Project**')
+    st.markdown('**© 2026 YourMajor**')
