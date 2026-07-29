@@ -1,102 +1,169 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
 import joblib
 import os
 
-sns.set_style('whitegrid')
-
 # Path ke model pipeline
 PIPELINE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'your_major_recomendation_pipeline.pkl')
+ASSET_DIR = os.path.dirname(os.path.abspath(__file__))
 
 @st.cache_resource
 def load_model():
-    """Load pipeline artefacts"""
     df = joblib.load(PIPELINE_PATH)['dataset_lengkap']
     return df
 
 def run():
     st.title('📊 Exploratory Data Analysis (EDA)')
     st.markdown('''
-    Halaman ini menampilkan hasil eksplorasi data dari **UTBK 2019 Saintek**
-    yang digunakan untuk sistem rekomendasi.
+    Halaman ini menampilkan eksplorasi data dari **86.569 siswa UTBK 2019 Saintek**
+    dengan **279 jurusan** dan **7 kategori bidang**.
     ''')
     st.markdown('---')
 
     df = load_model()
-
-    # 1. Distribusi per kategori
-    st.subheader('1. Distribusi Siswa per Bidang')
-
-    cat_dist = df['kategori_jurusan'].value_counts()
     total = len(df)
 
-    col1, col2 = st.columns([2, 1])
+    # ===================================================================
+    # 1. DISTRIBUSI SISWA PER BIDANG (Kategori Jurusan)
+    # ===================================================================
+    st.subheader('1️⃣ Distribusi Siswa per Bidang')
 
+    st.image(os.path.join(ASSET_DIR, 'kategori_jurusan.jpeg'),
+             caption='Kategori Jurusan — Distribusi siswa per bidang (Saintek)',
+             use_container_width=True)
+
+    # Statistik
+    cat_dist = df['kategori_jurusan'].value_counts()
+    col1, col2 = st.columns(2)
     with col1:
-        fig, ax = plt.subplots(figsize=(10, 5))
-        colors = plt.cm.Set2(range(len(cat_dist)))
-        bars = ax.bar(cat_dist.index, cat_dist.values, color=colors)
-        ax.set_title('Jumlah Siswa per Bidang', fontsize=14, fontweight='bold')
-        ax.set_ylabel('Jumlah Siswa')
-        ax.tick_params(axis='x', rotation=30)
-
-        for bar, val in zip(bars, cat_dist.values):
-            ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 300,
-                    f'{val:,}\n({val/total*100:.1f}%)', ha='center', fontsize=9)
-        st.pyplot(fig)
-        plt.close()
-
-    with col2:
-        st.markdown('**Distribusi:**')
+        st.markdown('**Distribusi siswa:**')
         for cat, cnt in cat_dist.items():
-            st.markdown(f'- **{cat}**: {cnt:,} ({cnt/total*100:.1f}%)')
+            st.markdown(f'- **{cat}**: {cnt:,} ({cnt/total*100:.2f}%)')
+    with col2:
         st.markdown(f'**Total: {total:,} siswa**')
+        st.markdown(f'**Domain: Saintek (IPA)**')
+        st.markdown(f'**Tahun: 2019**')
 
-    # 2. Statistik Nilai per Kategori
-    st.subheader('2. Rata-rata Nilai per Bidang')
+    st.markdown("""
+    > 💡 **Insight:** **Teknik** (29,12%) mendominasi diikuti **Kesehatan** (26,04%) dan **Science** (22,38%).
+    > Ketiganya mencakup **77,54%** dari total siswa. Sementara **Sosial** (2,92%) paling sedikit diminati —
+    > wajar karena dataset ini khusus Saintek.
+    """)
 
+    st.markdown('---')
+
+    # ===================================================================
+    # 2. RATA-RATA NILAI KESELURUHAN (AVG Nilai-Nilai)
+    # ===================================================================
+    st.subheader('2️⃣ Rata-rata Nilai Keseluruhan (86.569 Siswa)')
+
+    st.image(os.path.join(ASSET_DIR, 'avg_nilai_nilai.jpeg'),
+             caption='AVG Nilai-Nilai — Rata-rata 8 mata uji seluruh siswa',
+             use_container_width=True)
+
+    # Tabel pendukung
     nilai_cols = ['nilai_biologi', 'nilai_fisika', 'nilai_kimia', 'nilai_matematika',
                   'nilai_kmb', 'nilai_kpu', 'nilai_kua', 'nilai_ppu']
-    cols_short = ['Bio', 'Fis', 'Kim', 'Mat', 'KMB', 'KPU', 'KUA', 'PPU']
+    avg_values = df[nilai_cols].mean().sort_values(ascending=False)
 
-    avg_df = df.groupby('kategori_jurusan')[nilai_cols].mean().round(0)
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown('**Rata-rata per Mata Uji (descending):**')
+        for i, (col, val) in enumerate(avg_values.items(), 1):
+            subject = col.replace('nilai_', '').upper()
+            st.markdown(f'{i:>2}. **{subject}**: {val:.2f}')
+    with col2:
+        st.markdown('**Highlight:**')
+        st.markdown(f'📈 **Tertinggi**: {avg_values.index[0].replace("nilai_", "").upper()} ({avg_values[0]:.2f})')
+        st.markdown(f'📉 **Terendah**: {avg_values.index[-1].replace("nilai_", "").upper()} ({avg_values[-1]:.2f})')
+        st.markdown(f'📊 **Rata-rata total**: {avg_values.mean():.2f}')
+
+    st.markdown("""
+    > 💡 **Insight:** Nilai **KPU** (569,94) dan **KUA** (569,15) konsisten paling tinggi,
+    > sementara **Matematika** (529,49) dan **Biologi** (537,14) paling rendah.
+    > Ini menarik karena Matematika sering dianggap mata uji tersulit di Saintek.
+    """)
+
+    st.markdown('---')
+
+    # ===================================================================
+    # 3. BOX PLOT — SEBARAN NILAI PER MATA UJI
+    # ===================================================================
+    st.subheader('3️⃣ Sebaran Nilai per Mata Uji (Box Plot)')
+
+    st.image(os.path.join(ASSET_DIR, 'box_plot.jpeg'),
+             caption='Box Plot Outlier Numeric — Sebaran nilai per mata uji',
+             use_container_width=True)
+
+    # Stats table
+    nama_nilai = ['Nilai Biologi', 'Nilai Fisika', 'Nilai Kimia', 'Nilai Matematika',
+                  'Nilai KMB', 'Nilai KPU', 'Nilai KUA', 'Nilai PPU']
+    stats_df = df[nilai_cols].describe().T
+    stats_df.index = nama_nilai
+    stats_df = stats_df[['min', '25%', '50%', '75%', 'max', 'mean', 'std']]
+    stats_df = stats_df.round(1)
+    stats_df.columns = ['Min', 'Q1', 'Median', 'Q3', 'Max', 'Mean', 'Std']
+    st.dataframe(stats_df, use_container_width=True)
+
+    st.markdown("""
+    > 💡 **Insight:** Nilai maksimum mencapai **1.123** (Matematika — kemungkinan nilai bonus/eksperimen),
+    > sementara nilai minimum ada di **193** (KPU). Box plot menunjukkan distribusi cukup simetris
+    > dengan median di kisaran 520-570. Banyak outlier di atas, tapi jarang di bawah — artinya
+    > siswa cenderung punya nilai tinggi di beberapa mata uji tertentu.
+    """)
+
+    st.markdown('---')
+
+    # ===================================================================
+    # 4. HEATMAP — RATA-RATA NILAI PER KATEGORI
+    # ===================================================================
+    st.subheader('4️⃣ Rata-rata Nilai per Bidang (Heatmap)')
+
+    st.image(os.path.join(ASSET_DIR, 'heatmap_kategori.jpeg'),
+             caption='AVG Nilai Pada Kategori Jurusan — Rata-rata nilai per bidang',
+             use_container_width=True)
+
+    # Data pendukung
+    cols_short = ['Bio', 'Fis', 'Kim', 'Mat', 'KMB', 'KPU', 'KUA', 'PPU']
+    avg_df = df.groupby('kategori_jurusan')[nilai_cols].mean().round(2)
     avg_df.columns = cols_short
 
-    fig, ax = plt.subplots(figsize=(12, 6))
-    im = ax.imshow(avg_df.values, cmap='YlOrRd', aspect='auto')
-    ax.set_xticks(range(len(cols_short)))
-    ax.set_xticklabels(cols_short)
-    ax.set_yticks(range(len(avg_df.index)))
-    ax.set_yticklabels(avg_df.index)
-    ax.set_title('Rata-rata Nilai per Bidang', fontsize=14, fontweight='bold')
+    max_val = avg_df.max().max()
+    max_loc = avg_df.stack().idxmax()
+    min_val = avg_df.min().min()
+    min_loc = avg_df.stack().idxmin()
 
-    for i in range(len(avg_df.index)):
-        for j in range(len(cols_short)):
-            ax.text(j, i, f'{int(avg_df.values[i, j])}', ha='center', va='center', fontsize=9, color='black')
+    st.markdown(f"""
+    > 💡 **Insight:** **{max_loc[0]}** punya nilai rata-rata tertinggi di **{max_loc[1]}** ({max_val:.2f}),
+    > sementara **{min_loc[0]}** punya nilai terendah di **{min_loc[1]}** ({min_val:.2f}).
+    > Menariknya, **Pendidikan** konsisten lebih rendah di hampir semua mata uji,
+    > sementara **Teknik** dan **Kesehatan** mendominasi nilai-nilai tertinggi.
+    """)
 
-    plt.colorbar(im, ax=ax, label='Nilai Rata-rata')
-    st.pyplot(fig)
-    plt.close()
+    st.markdown('---')
 
-    st.markdown('''
-    > 💡 **Insight:** Rata-rata nilai antar kategori hampir sama (526-557).
-    > Inilah kenapa **classifier tidak bisa akurat** — pilihan jurusan lebih ditentukan
-    > oleh **preferensi** daripada nilai semata.
-    ''')
+    # ===================================================================
+    # 5. TOP JURUSAN PALING DIMINATI
+    # ===================================================================
+    st.subheader('5️⃣ Jurusan Dengan Minat Terbanyak')
 
-    # 3. Top Jurusan per Bidang
-    st.subheader('3. Top 5 Jurusan per Bidang')
+    st.image(os.path.join(ASSET_DIR, 'minat_terbanyak.jpeg'),
+             caption='Jurusan Dengan Minat Terbanyak — Top 40 jurusan paling diminati',
+             use_container_width=True)
 
-    for cat in df['kategori_jurusan'].unique():
-        df_cat = df[df['kategori_jurusan'] == cat]
-        top5 = df_cat['jurusan_tujuan'].value_counts().head(5)
+    # Tabel top 10
+    st.markdown('**Top 10 Jurusan Paling Diminati:**')
+    top10 = df['jurusan_tujuan'].value_counts().head(10).reset_index()
+    top10.columns = ['Jurusan', 'Jumlah Siswa']
+    st.dataframe(top10, use_container_width=True, hide_index=True)
 
-        st.markdown(f'**{cat}** ({len(df_cat):,} siswa)')
-        for rank, (j, cnt) in enumerate(top5.items(), 1):
-            st.markdown(f'&nbsp;&nbsp;{rank}. {j} — {cnt:,} siswa')
-        st.markdown('')
+    st.markdown("""
+    > 💡 **Insight:** **PENDIDIKAN DOKTER** (≈6.000 siswa) menjadi jurusan paling diminati —
+    > hampir **2x lipat** dari **Teknik Sipil** (#2, ≈3.800). Menariknya, **Kedokteran** (≈1.700)
+    > hanya di peringkat #12, menunjukkan siswa lebih memilih **Pendidikan Dokter** yang jenjangnya
+    > lebih pendek. Jurusan IT/komputer seperti **Teknik Informatika** (#4, ≈3.000) dan
+    > **Sistem Informasi** juga masuk 15 besar.
+    """)
 
     st.markdown('---')
     st.markdown('**© 2026 Muhammad Izzat — Final Project**')
