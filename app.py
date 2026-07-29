@@ -25,18 +25,8 @@ def main():
     # Logo
     st.sidebar.image(os.path.join(ASSET_DIR, 'logo_app.jpeg'), use_container_width=True)
     st.sidebar.markdown('---')
-def main():
-    st.sidebar.markdown("""
-    <style>
-    .sidebar-title {
-        font-size: 1.2em;
-        font-weight: bold;
-        margin-bottom: 0.5em;
-    }
-    </style>
-    """, unsafe_allow_html=True)
 
-    st.sidebar.markdown('<div class="sidebar-title">🎓 Your Major Recommendation</div>', unsafe_allow_html=True)
+    st.sidebar.markdown('<div class="sidebar-title">Your Major Recommendation</div>', unsafe_allow_html=True)
 
     page = st.sidebar.selectbox(
         'Pilih Halaman',
