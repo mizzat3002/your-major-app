@@ -23,10 +23,10 @@ st.set_page_config(
 
 def main():
     # Logo
-    st.sidebar.image('logo.png', use_container_width=True)
+    st.sidebar.image('logo.png')
     st.sidebar.markdown('---')
 
-    st.sidebar.markdown('<div class="sidebar-title">Your Major Recommendation</div>', unsafe_allow_html=True)
+    st.sidebar.title("Your Major Recommendation")
 
     page = st.sidebar.selectbox(
         'Pilih Halaman',
@@ -89,7 +89,7 @@ def show_home():
         """)
 
     st.markdown('---')
-    st.markdown('** Muhammad Izzat — Ridhan Firdaus - Nicholas Calvin **')
+    st.markdown('**2026 YourMajor**')
 
 
 if __name__ == '__main__':
