@@ -36,7 +36,7 @@ def run():
 
     st.image(os.path.join(ASSET_DIR, 'kategori_jurusan.jpeg'),
              caption='Kategori Jurusan — Distribusi siswa per bidang (Saintek)',
-             use_container_width=True)
+             width=700)
 
     # Statistik
     cat_dist = df['kategori_jurusan'].value_counts()
@@ -65,7 +65,7 @@ def run():
 
     st.image(os.path.join(ASSET_DIR, 'avg_nilai_nilai.jpeg'),
              caption='AVG Nilai-Nilai — Rata-rata 8 mata uji seluruh siswa',
-             use_container_width=True)
+             width=700)
 
     # Tabel pendukung
     avg_values = df[nilai_cols].mean().sort_values(ascending=False)
@@ -98,7 +98,7 @@ def run():
 
     st.image(os.path.join(ASSET_DIR, 'box_plot.jpeg'),
              caption='Box Plot Outlier Numeric — Sebaran nilai per mata uji',
-             use_container_width=True)
+             width=700)
 
     # Stats table
     nama_nilai = ['Nilai Biologi', 'Nilai Fisika', 'Nilai Kimia', 'Nilai Matematika',
@@ -126,7 +126,7 @@ def run():
 
     st.image(os.path.join(ASSET_DIR, 'heatmap_kategori.jpeg'),
              caption='AVG Nilai Pada Kategori Jurusan — Rata-rata nilai per bidang',
-             use_container_width=True)
+             width=700)
 
     # Data pendukung
     cols_short = ['Bio', 'Fis', 'Kim', 'Mat', 'KMB', 'KPU', 'KUA', 'PPU']
@@ -154,7 +154,7 @@ def run():
 
     st.image(os.path.join(ASSET_DIR, 'minat_terbanyak.jpeg'),
              caption='Jurusan Dengan Minat Terbanyak — Top 40 jurusan paling diminati',
-             use_container_width=True)
+             width=700)
 
     # Tabel top 10
     st.markdown('**Top 10 Jurusan Paling Diminati:**')
