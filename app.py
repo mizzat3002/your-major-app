@@ -23,7 +23,10 @@ st.set_page_config(
 
 def main():
     # Logo
-    st.sidebar.image(os.path.join(ASSET_DIR, 'logo_app.jpeg'), use_container_width=True)
+    try:
+        st.sidebar.image('logo_app.jpeg', use_container_width=True)
+    except:
+        pass
     st.sidebar.markdown('---')
 
     st.sidebar.markdown('<div class="sidebar-title">Your Major Recommendation</div>', unsafe_allow_html=True)
