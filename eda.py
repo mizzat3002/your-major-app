@@ -1,7 +1,11 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 import joblib
 import os
+
+sns.set_style('whitegrid')
 
 # Path ke model pipeline
 PIPELINE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'your_major_recomendation_pipeline.pkl')
@@ -22,6 +26,8 @@ def run():
 
     df = load_model()
     total = len(df)
+    nilai_cols = ['nilai_biologi', 'nilai_fisika', 'nilai_kimia', 'nilai_matematika',
+                  'nilai_kmb', 'nilai_kpu', 'nilai_kua', 'nilai_ppu']
 
     # ===================================================================
     # 1. DISTRIBUSI SISWA PER BIDANG (Kategori Jurusan)
@@ -62,20 +68,19 @@ def run():
              use_container_width=True)
 
     # Tabel pendukung
-    nilai_cols = ['nilai_biologi', 'nilai_fisika', 'nilai_kimia', 'nilai_matematika',
-                  'nilai_kmb', 'nilai_kpu', 'nilai_kua', 'nilai_ppu']
     avg_values = df[nilai_cols].mean().sort_values(ascending=False)
+    avg_list = list(avg_values.items())
 
     col1, col2 = st.columns(2)
     with col1:
         st.markdown('**Rata-rata per Mata Uji (descending):**')
-        for i, (col, val) in enumerate(avg_values.items(), 1):
+        for i, (col, val) in enumerate(avg_list, 1):
             subject = col.replace('nilai_', '').upper()
             st.markdown(f'{i:>2}. **{subject}**: {val:.2f}')
     with col2:
         st.markdown('**Highlight:**')
-        st.markdown(f'📈 **Tertinggi**: {avg_values.index[0].replace("nilai_", "").upper()} ({avg_values[0]:.2f})')
-        st.markdown(f'📉 **Terendah**: {avg_values.index[-1].replace("nilai_", "").upper()} ({avg_values[-1]:.2f})')
+        st.markdown(f'📈 **Tertinggi**: {avg_list[0][0].replace("nilai_", "").upper()} ({avg_list[0][1]:.2f})')
+        st.markdown(f'📉 **Terendah**: {avg_list[-1][0].replace("nilai_", "").upper()} ({avg_list[-1][1]:.2f})')
         st.markdown(f'📊 **Rata-rata total**: {avg_values.mean():.2f}')
 
     st.markdown("""
