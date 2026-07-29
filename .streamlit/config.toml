@@ -1,5 +1,5 @@
 [theme]
-primaryColor = "#38BDF8"             # Sky Blue (Tombol & Tab Aktif)
-backgroundColor = "#0F172A"          # Dark Slate (Konten Utama)
-secondaryBackgroundColor = "#1E293B" # Medium Slate (Sidebar & Card)
-textColor = "#F8FAFC"                # White Smoke (Teks)
+primaryColor = "#F59E0B"             # Warm Amber/Gold (Tombol & Highlight)
+backgroundColor = "#0B132B"          # Deep Navy (Konten Utama)
+secondaryBackgroundColor = "#1C2541" # Slate Navy (Sidebar & Card)
+textColor = "#FFFFFF"                # Pure White (Teks)
