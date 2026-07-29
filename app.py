@@ -14,13 +14,17 @@ import eda
 import prediction
 
 
+ASSET_DIR = os.path.dirname(os.path.abspath(__file__))
+
 st.set_page_config(
     page_title='Your Major Recommendation',
-    page_icon='🎓',
     layout='wide'
 )
 
-
+def main():
+    # Logo
+    st.sidebar.image(os.path.join(ASSET_DIR, 'logo_app.jpeg'), use_container_width=True)
+    st.sidebar.markdown('---')
 def main():
     st.sidebar.markdown("""
     <style>
@@ -40,11 +44,10 @@ def main():
     )
 
     st.sidebar.markdown('---')
-    st.sidebar.markdown('**Final Project**')
     st.sidebar.markdown('Rekomendasi Jurusan & Universitas')
     st.sidebar.markdown('Berdasarkan Nilai UTBK 2019 Saintek')
     st.sidebar.markdown('')
-    st.sidebar.markdown('by **Muhammad Izzat**')
+    st.sidebar.markdown('by **Muhammad Izzat - Ridhan Firdaus - Nicholas Calvin**')
 
     if page == 'Home':
         show_home()
@@ -93,15 +96,10 @@ def show_home():
         | **Jurusan** | 279 pilihan |
         | **Bidang** | 7 kategori |
 
-        **Teknologi**
-
-        ⚡ K-Nearest Neighbors
-        📊 Streamlit
-        🐍 Python
         """)
 
     st.markdown('---')
-    st.markdown('**© 2026 Muhammad Izzat — Final Project**')
+    st.markdown('** Muhammad Izzat — Ridhan Firdaus - Nicholas Calvin **')
 
 
 if __name__ == '__main__':
