@@ -17,16 +17,44 @@ import prediction
 ASSET_DIR = os.path.dirname(os.path.abspath(__file__))
 
 st.set_page_config(
-    page_title='Your Major Recommendation',
+    page_title='YourMajor Recommendation',
     layout='wide'
 )
 
 def main():
     # Logo
-    st.sidebar.image('logo.png')
+    st.sidebar.image('logo.png', use_container_width=True)
     st.sidebar.markdown('---')
 
-    st.sidebar.title("Your Major Recommendation")
+    # Custom CSS sidebar
+    st.markdown("""
+    <style>
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+        border-right: 1px solid rgba(255,255,255,0.05);
+    }
+    [data-testid="stSidebar"] .sidebar-title {
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-bottom: 0.5em;
+        color: #ffffff;
+    }
+    [data-testid="stSidebar"] .stSelectbox label {
+        color: #b0b0b0 !important;
+    }
+    [data-testid="stSidebar"] .stSelectbox div[data-baseweb="select"] {
+        background-color: #0f3460 !important;
+        border: 1px solid #e94560 !important;
+        border-radius: 8px !important;
+    }
+    [data-testid="stSidebar"] .stSelectbox div[data-baseweb="select"]:hover {
+        border-color: #533483 !important;
+    }
+    [data-testid="stSidebar"] p {
+        color: #cccccc !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
     page = st.sidebar.selectbox(
         'Pilih Halaman',
@@ -55,12 +83,12 @@ def show_home():
 
     with col1:
         st.markdown("""
-        ### Selamat Datang!
+        ### Welcome!
 
         Aplikasi ini membantu calon mahasiswa menemukan **jurusan dan universitas**
         yang paling sesuai dengan **nilai UTBK** mereka.
 
-        ### Cara Kerja
+        ### Workflow
 
         Aplikasi menggunakan pendekatan **K-Nearest Neighbors** berdasarkan nilai UTBK:
 
@@ -68,10 +96,11 @@ def show_home():
         - **Cari** 100 siswa paling mirip dari 86.569 data UTBK 2019 Saintek
         - **Ranking** jurusan berdasarkan kemiripan
 
-        ### Cara Pakai
-
-        1. Buka halaman **EDA** untuk lihat eksplorasi dataset
-        2. Buka halaman **Prediksi** untuk masukkan nilai dan lihat rekomendasi
+        ### Pages
+        
+        1. **Home** Beranda & Informasi Project
+        1. **EDA** Eksplorasi & Visualisasi Data
+        2. **Prediksi** Rekomendasi Jurusan
         """)
 
     with col2:
