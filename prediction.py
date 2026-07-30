@@ -68,7 +68,7 @@ def run():
 
             # Rata-rata + status
             avg = np.mean(inputs)
-            msg, level = kategori_nilai(avg)
+            msg = kategori_nilai(avg)
 
             # Transform input
             vals = np.array(inputs).reshape(1, -1)
