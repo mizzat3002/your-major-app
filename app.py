@@ -24,7 +24,7 @@ st.set_page_config(
 
 def main():
     # Logo
-    st.sidebar.image('logo_remove.png', use_container_width=True)
+    st.sidebar.image('logo_removebg.png', use_container_width=True)
     st.sidebar.markdown('---')
 
     page = st.sidebar.selectbox(
