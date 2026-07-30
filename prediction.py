@@ -20,21 +20,21 @@ def load_model():
 
 def kategori_nilai(avg):
     if avg > 800:
-        return "🔥 OUTLIER! Nilai kamu luar biasa!", "outlier"
+        return "🔥 OUTLIER! Nilai kamu luar biasa!"
     elif avg > 700:
-        return "💪 Kamu OP! Masuk universitas terbaik!", "op"
+        return "💪 Kamu OP! Masuk universitas terbaik!"
     elif avg > 550:
-        return "✅ Nilai kamu sudah berada di ranah rata-rata. Banyak pilihan jurusan!", "rata"
+        return "✅ Nilai kamu sudah berada di ranah rata-rata. Banyak pilihan jurusan!"
     elif avg > 400:
-        return "⚠️ Nilai kamu di ambang masalah. Masih ada peluang!", "ambang"
+        return "⚠️ Nilai kamu di ambang masalah. Masih ada peluang!"
     else:
-        return "😬 Kamu mending mandiri ajalah. Semangat!", "mandiri"
+        return "😬 Kamu mending mandiri ajalah. Semangat! Tapi tetep kok kita rekomendasikan 😏" 
 
 
 def run():
-    # Logo di atas halaman
-    st.image(os.path.join(ASSET_DIR, 'logo_removebg.png'), width=150)
-    st.title('🔮 Prediksi & Rekomendasi Jurusan')
+    # Logo emoji
+    st.markdown("<h1 style='text-align: center; font-size: 80px;'>🔮</h1>", unsafe_allow_html=True)
+    st.title('Prediksi & Rekomendasi Jurusan')
     st.markdown('---')
 
     scaler, nn, nilai_cols, df = load_model()
