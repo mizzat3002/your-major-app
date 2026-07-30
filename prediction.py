@@ -32,8 +32,8 @@ def kategori_nilai(avg):
 
 
 def run():
-    # Logo emoji
-    st.markdown("<h1 style='text-align: center; font-size: 80px;'>🔮</h1>", unsafe_allow_html=True)
+    # Logo di atas halaman
+    st.image(os.path.join(ASSET_DIR, 'logo_removebg.png'), width=150)
     st.title('Prediksi & Rekomendasi Jurusan')
     st.markdown('---')
 
