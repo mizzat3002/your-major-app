@@ -1,6 +1,5 @@
 [theme]
-primaryColor = "#533483"
-backgroundColor = "#0E1117"
-secondaryBackgroundColor = "#1a1a2e"
-textColor = "#FFFFFF"
-font = "sans serif"
+primaryColor = "#2563EB"             # Royal Blue
+backgroundColor = "#FFFFFF"          # Murni Putih
+secondaryBackgroundColor = "#F1F5F9" # Light Grey/Slate (Sidebar)
+textColor = "#0F172A"                # Dark Text
