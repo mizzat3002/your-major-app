@@ -35,8 +35,8 @@ def run():
     # Logo di tengah
     col_logo = st.columns([1, 2, 1])
     with col_logo[1]:
-        st.image(os.path.join(ASSET_DIR, 'logo_removebg.png'), width=200)
-    st.title('Prediksi & Rekomendasi Jurusan')
+        st.image(os.path.join(ASSET_DIR, 'logo_removebg.png'), width=250)
+    st.markdown("<h1 style='text-align: center;'>Prediksi & Rekomendasi Jurusan</h1>", unsafe_allow_html=True)
     st.markdown('---')
 
     scaler, nn, nilai_cols, df = load_model()
