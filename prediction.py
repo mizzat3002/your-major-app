@@ -32,11 +32,13 @@ def kategori_nilai(avg):
 
 
 def run():
-    # Logo di tengah
-    col_logo = st.columns([1, 2, 1])
-    with col_logo[1]:
-        st.image(os.path.join(ASSET_DIR, 'logo_removebg.png'), width=250)
-    st.markdown("<h1 style='text-align: center;'>Prediksi & Rekomendasi Jurusan</h1>", unsafe_allow_html=True)
+    # Logo + Title sebaris pake CSS
+    st.markdown("""
+        <div style='display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 10px;'>
+            <img src='https://raw.githubusercontent.com/mizzat3002/your-major-app/main/logo_removebg.png' width='90' style='flex-shrink: 0;'>
+            <h1 style='margin: 0;'>Prediksi & Rekomendasi Jurusan</h1>
+        </div>
+    """, unsafe_allow_html=True)
     st.markdown('---')
 
     scaler, nn, nilai_cols, df = load_model()
