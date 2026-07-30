@@ -12,12 +12,13 @@ import seaborn as sns
 import joblib
 import eda
 import prediction
+from PIL import Image
 
 ASSET_DIR = os.path.dirname(os.path.abspath(__file__))
 
 st.set_page_config(
     page_title='YourMajor Recommendation',
-    page_icon='https://raw.githubusercontent.com/mizzat3002/your-major-app/main/logo_removebg.png',
+    page_icon='🏫',
     layout='wide'
 )
 
