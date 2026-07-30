@@ -2,4 +2,4 @@
 primaryColor = "#10B981"             # Emerald Green (Tombol & Accent)
 backgroundColor = "#062C22"          # Dark Forest (Konten Utama)
 secondaryBackgroundColor = "#0F4C3A" # Deep Emerald (Sidebar & Card)
-textColor = "#ECFDF5"                # Mint White (Teks)
+textColor = "#000000"              # Mint White (Teks)
