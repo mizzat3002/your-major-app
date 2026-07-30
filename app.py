@@ -18,6 +18,7 @@ ASSET_DIR = os.path.dirname(os.path.abspath(__file__))
 
 st.set_page_config(
     page_title='YourMajor Recommendation',
+    page_icon='logo_app.jpeg',
     layout='wide'
 )
 
@@ -41,7 +42,6 @@ def main():
 * Ridhan Firdaus
 * Nicholas Calvin
 """)
-       
 
     if page == 'Home':
         show_home()
@@ -94,7 +94,7 @@ def show_home():
         """)
 
     st.markdown('---')
-    st.markdown('**2026 YourMajor**')
+    st.markdown('**© 2026 YourMajor**')
 
 
 if __name__ == '__main__':
