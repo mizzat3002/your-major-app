@@ -32,6 +32,114 @@ def kategori_nilai(avg):
 
 
 def run():
+    # Logo di tengah
+    col_logo = st.columns([1, 2, 1])
+    with col_logo[1]:
+        st.image(os.path.join(ASSET_DIR, 'logo_removebg.png'), width=200)
+    st.title('Prediksi & Rekomendasi Jurusan')
+    st.markdown('---')
+
+    scaler, nn, nilai_cols, df = load_model()
+
+    # Input nama
+    nama = st.text_input('📋 Nama Peserta', placeholder='Masukkan nama kamu...')
+
+    st.subheader('📝 Masukkan Nilai UTBK')
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        nilai_biologi = st.number_input('🧬 Biologi', min_value=0, max_value=1000, value=600, step=10)
+        nilai_fisika = st.number_input('⚡ Fisika', min_value=0, max_value=1000, value=600, step=10)
+        nilai_kimia = st.number_input('🧪 Kimia', min_value=0, max_value=1000, value=600, step=10)
+        nilai_matematika = st.number_input('📐 Matematika', min_value=0, max_value=1000, value=600, step=10)
+
+    with col2:
+        nilai_kmb = st.number_input('🧠 KMB', min_value=0, max_value=1000, value=600, step=10)
+        nilai_kpu = st.number_input('📊 KPU', min_value=0, max_value=1000, value=600, step=10)
+        nilai_kua = st.number_input('📏 KUA', min_value=0, max_value=1000, value=600, step=10)
+        nilai_ppu = st.number_input('📝 PPU', min_value=0, max_value=1000, value=600, step=10)
+
+    inputs = [nilai_biologi, nilai_fisika, nilai_kimia, nilai_matematika,
+              nilai_kmb, nilai_kpu, nilai_kua, nilai_ppu]
+
+    st.markdown('---')
+
+    if st.button('🎯 Cari Rekomendasi', type='primary', use_container_width=True):
+        with st.spinner('Mencari siswa dengan nilai paling mirip...'):
+
+            # Rata-rata + status
+            avg = np.mean(inputs)
+            msg = kategori_nilai(avg)
+
+            # Transform input
+            vals = np.array(inputs).reshape(1, -1)
+            vals_scaled = scaler.transform(vals)
+
+            # Cari tetangga
+            distances, indices = nn.kneighbors(vals_scaled)
+            neighbors = df.iloc[indices[0]].copy()
+            neighbors['_distance'] = distances[0]
+
+            # Ranking jurusan
+            jurusan_rank = neighbors['jurusan_tujuan'].value_counts().head(10)
+            total = len(neighbors)
+
+            # Distribusi kategori
+            kategori_dist = neighbors['kategori_jurusan'].value_counts()
+            kategori_dominan = kategori_dist.index[0]
+            kategori_pct = kategori_dist.iloc[0] / total * 100
+
+            # Top kategori
+            top_kategori = [(cat, round(cnt / total * 100, 1))
+                           for cat, cnt in kategori_dist.head(4).items()]
+
+            # === TAMPILKAN HASIL ===
+            nama_tampil = nama if nama.strip() else "Peserta"
+            st.success(f'✅ Rekomendasi untuk **{nama_tampil}** ditemukan!')
+
+            # Baris 0: Status nilai
+            rata_rata = round(avg, 1)
+            st.info(f'📊 **Rata-rata nilai kamu: {rata_rata}**')
+            st.markdown(f'### {msg}')
+
+            # Baris 1: Bidang
+            st.subheader('📌 Bidang yang Direkomendasikan')
+
+            col_cat = st.columns(len(top_kategori))
+            for i, (cat, pct) in enumerate(top_kategori):
+                with col_cat[i]:
+                    if cat == kategori_dominan:
+                        st.markdown(f"**🟢 {cat}**")
+                    else:
+                        st.markdown(f"⚪ {cat}")
+                    st.progress(pct / 100, text=f'{pct:.0f}%')
+
+            # Baris 2: Rekomendasi Jurusan
+            st.subheader('🏆 Rekomendasi Jurusan Terbaik')
+
+            for rank, (jurusan, cnt) in enumerate(jurusan_rank.items(), start=1):
+                pct = cnt / total * 100
+                if rank == 1:
+                    icon = '🥇'
+                elif rank == 2:
+                    icon = '🥈'
+                elif rank == 3:
+                    icon = '🥉'
+                else:
+                    icon = f'{rank}.'
+
+                st.markdown(f'{icon} **{jurusan}** — {cnt} siswa ({pct:.1f}%)')
+
+    st.markdown('---')
+    st.markdown('**© 2026 YourMajor**')
+    elif avg > 400:
+        return "⚠️ Nilai kamu di ambang masalah. Masih ada peluang!"
+    else:
+        return "😬 Kamu mending mandiri ajalah. Semangat! Tapi tetep kok kita rekomendasikan 😏" 
+
+
+def run():
     # Logo di atas halaman
     st.image(os.path.join(ASSET_DIR, 'logo_removebg.png'), width=150)
     st.title('Prediksi & Rekomendasi Jurusan')
