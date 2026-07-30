@@ -35,7 +35,13 @@ def main():
     st.sidebar.markdown('Rekomendasi Jurusan & Universitas')
     st.sidebar.markdown('Berdasarkan Nilai UTBK 2019 Saintek')
     st.sidebar.markdown('')
-    st.sidebar.markdown('by **Muhammad Izzat - Ridhan Firdaus - Nicholas Calvin**')
+    st.sidebar.markdown("""
+**Created by:**
+* Muhammad Izzat
+* Ridhan Firdaus
+* Nicholas Calvin
+""")
+       
 
     if page == 'Home':
         show_home()
