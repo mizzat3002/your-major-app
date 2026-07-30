@@ -12,13 +12,14 @@ import seaborn as sns
 import joblib
 import eda
 import prediction
-
+from PIL import Image
 
 ASSET_DIR = os.path.dirname(os.path.abspath(__file__))
 
+icon = Image.open('logo_removebg.jpeg')
 st.set_page_config(
     page_title='YourMajor Recommendation',
-    page_icon='icon_YM.ico',
+    page_icon='icon',
     layout='wide'
 )
 
