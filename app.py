@@ -18,7 +18,7 @@ ASSET_DIR = os.path.dirname(os.path.abspath(__file__))
 
 st.set_page_config(
     page_title='YourMajor Recommendation',
-    page_icon='logo.png',
+    page_icon='icon_YM.ico',
     layout='wide'
 )
 
@@ -53,6 +53,7 @@ def main():
 
 def show_home():
     st.title('🎓 Your Major Recommendation')
+    st.image('gambar_kampus.jpeg')
     st.markdown('---')
 
     col1, col2 = st.columns([2, 1])
